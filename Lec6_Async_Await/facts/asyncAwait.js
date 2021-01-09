@@ -23,4 +23,4 @@ console.log("end");
 // let pendingPromise = axios.get("https://jsonplaceholder.typicode.com/todos/1");
 // pendingPromise.then(function(data){
 //     console.log(data.data);
-// })
+// })`
