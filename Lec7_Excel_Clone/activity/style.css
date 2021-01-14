@@ -1,0 +1,74 @@
+*{
+    box-sizing: border-box; 
+}
+
+html,body{
+    margin: 0px;
+}
+
+.menu{
+    height: 40px;
+    border: 1px solid;
+}
+.menu-options{
+    height: 60px;
+    border: 1px solid;
+}
+.address{
+    height: 40px;
+    border: 1px solid;
+}
+.sheets{
+    height: 40px;
+    border: 1px solid;
+}
+.content{
+    height: calc(100vh - 180px);
+    border: 1px solid;
+    overflow: auto;
+    position: relative;
+}
+
+.row{
+    display: flex;
+}
+.cell{
+    border: 1px solid;
+    min-height: 25px;
+    min-width: 60px;
+}
+
+.top-left-cell{
+    height: 25px;
+    width: 25px;
+    background: lightgray;
+}
+
+.top-row{
+    display: flex;
+    position: absolute;
+    top: 0px;
+    left: 25px;
+    background: lightgreen;
+}
+.top-row-cell{
+    border: 1px solid;
+    min-height: 25px;
+    min-width: 60px;
+    text-align: center;
+}
+.left-col{
+    position: absolute;
+    background: lightgreen;
+}
+.left-col-cell{
+    height: 25px;
+    border: 1px solid;
+    width: 25px;
+    text-align: center;
+}
+.cells{
+    position: absolute;
+    left: 25px;
+    top: 25px;
+}
