@@ -5,7 +5,8 @@ const userRouter = require("./router/userRouter");
 
 const app = express();
 
-
+// dumps post data into req.body
+app.use(  express.json() );
 
 
 // for all the user related functions navigate to userRouter;
@@ -14,6 +15,10 @@ app.use("/api/user" , userRouter);
 
 
 
+
+// app.get("/api/user/:id" , function(req , res){
+//     console.log(req.params.id);
+// })
 
 
 
