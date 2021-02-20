@@ -23,26 +23,26 @@
 // obj.sayHi(); // method call
 
 let obj = {
-    name: "Steve",
-    sayHi: function () {
+  name: "Steve",
+  sayHi: function () {
+    console.log(this);
+    console.log("Inside say Hiii !!!");
+    callMe = () => {
+      console.log("Inside call me");
       console.log(this);
-      console.log("Inside say Hiii !!!");
-      callMe = () => {
-        console.log("Inside call me");
-        console.log(this);
-      };
-      callMe();
-    },
-  };
-  // obj.sayHi();
-  
-  // function fun(){
-  //     console.log(this);
-  //     console.log("Inside Fun !!!");
-  // }
-  
-  
-  fun = ()=>{
-      console.log(this);
-  }
-  fun();
+    };
+    callMe();
+  },
+};
+// obj.sayHi();
+
+// function fun(){
+//     console.log(this);
+//     console.log("Inside Fun !!!");
+// }
+
+
+fun = ()=>{
+    console.log(this);
+}
+fun();
