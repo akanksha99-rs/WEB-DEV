@@ -1,104 +1,112 @@
 import React, { Component } from "react";
-import "./skin1.css";
-class Skin extends Component {
+import firebaseApp from "../../firebase/firebaseConfig";
+
+
+class SignUp extends Component {
   state = {
-    contactDetails: {
-      fname: "STEVE",
-      lname: "",
-      summary: "",
-      email: "",
-      phone: "",
-      profession: "",
-      street: "",
-      city: "",
-      state: "",
-      country: "",
-      pin: "",
-    },
-    educationDetails: {
-      collegeName: "",
-      degree: "",
-      cgpa: "",
-      collegeCity: "",
-      collegeState: "",
-      graduationMonth: "",
-      graduationYear: "",
-    },
-    experienceDetails: [
-      { companyName: "", duration: "", position: "" },
-      { companyName: "", duration: "", position: "" },
-      { companyName: "", duration: "", position: "" },
-    ],
-    projects: [
-      { projectName: "A", techStack: ["E", "F", "G"], summary: "asfasf" , projectLink:"" },
-      { projectName: "B", techStack: ["J", "I", "H"], summary: "asgasdg" , projectLink:""},
-      { projectName: "C", techStack: ["K", "L", "M"], summary: "asdgasg"  , projectLink:""},
-      { projectName: "D", techStack: ["P", "O", "N"], summary: "asdgasg"  , projectLink:""}
-    ],
-    skills : {
-        language : ["" , "" , ""] ,
-        frameworks : ["" , "" , ""] ,
-        software : ["" , "" , ""] ,
-        ide : ["" , "" , ""]
-    } ,
-    profileLinks : {
-        linkedIn : "" ,
-        github : "" 
-    } ,
-    achievements : ["" ,"" ,"" , "" ,""] ,
-    hobbies : ["" , "" , "" , "" , ""] 
+    fname: "",
+    lname:"",
+    id: "",
+    pw: "",
+    error: "",
   };
+
+  onChangeHandler = (e) => {
+    let id = e.target.id;
+    let value = e.target.value;
+    this.setState({
+      [id]: value,
+    });
+  };
+
+
+  signUpHandler = () =>{
+      // this.props.signup !!!
+      let id = this.state.id;
+      let pw = this.state.pw;
+      firebaseApp.auth().createUserWithEmailAndPassword(id , pw)
+      .then( userInfo =>{
+          console.log("Inside then");
+        //   console.log(userInfo);
+        let fname = this.state.fname;
+        let lname = this.state.lname;
+        let uid = userInfo.user.uid;
+        let userCreatedPromise = firebaseApp.firestore().collection("users").doc(uid).set({
+            "First Name" : fname ,
+            "Last Name": lname ,
+            "Email" : id ,
+            "Password":pw ,
+            "uid" : uid
+        })
+        return userCreatedPromise;
+      })
+      .then( obj =>{
+          console.log("User Created !!!!");
+          console.log(obj);
+      })
+      .catch(error=>{
+          console.log("inside catch");
+          console.log(error);
+          this.setState({
+              error : error.message
+          })
+      })
+      
+  }
+
   render() {
-    let {
-      fname,
-      lname,
-      summary,
-      email,
-      phone,
-      profession,
-      street,
-      city,
-      state,
-      country,
-      pin,
-    } = this.state.contactDetails;
-    let {
-      collegeName,
-      degree,
-      cgpa,
-      collegeCity,
-      collegeState,
-      graduationMonth,
-      graduationYear,
-    } = this.state.educationDetails;
-
-    let projects = this.state.projects;
     return (
-      
-      // projects: [
-      //   { projectName: "", techStack: ["", "", ""], summary: "" , projectLink:"" },
-      //   { projectName: "", techStack: ["", "", ""], summary: "" , projectLink:""},
-      //   { projectName: "", techStack: ["", "", ""], summary: ""  , projectLink:""},
-      //   { projectName: "", techStack: ["", "", ""], summary: ""  , projectLink:""}
-      // ]
-      <div className="resume-skin">
-        
-        <div className="projects">
-          {  projects.map( project =>{
-            return <ul className="project item">
-                      <li>{project.projectName}</li>
-                      <li>{project.techStack.map( techStack =>{
-                        return <p>{techStack}</p>;
-                      })}</li>
-                      <li>{project.summary}</li>
-            </ul>
-          })}
-
+      <div className="signup">
+        <div>
+          <h2>First Name</h2>
+          <input
+            type="text"
+            id="fname"
+            value={this.state.fname}
+            onChange={(e) => {
+              this.onChangeHandler(e);
+            }}
+          />
+        </div>  
+        <div>
+          <h2>Last Name</h2>
+          <input
+            type="text"
+            id="lname"
+            value={this.state.lname}
+            onChange={(e) => {
+              this.onChangeHandler(e);
+            }}
+          />
+        </div>  
+        <div>
+          <h2>Id</h2>
+          <input
+            type="text"
+            id="id"
+            value={this.state.id}
+            onChange={(e) => {
+              this.onChangeHandler(e);
+            }}
+          />
         </div>
-      
+        <div>
+          <h2>Password</h2>
+          <input
+            type="text"
+            id="pw"
+            value={this.state.pw}
+            onChange={(e) => {
+              this.onChangeHandler(e);
+            }}
+          />
+        </div>
+           <button className="btn" onClick={ this.signUpHandler }>Sign Up</button> 
+
+           <p>{this.state.error}</p>
       </div>
     );
   }
 }
 
-export default Skin;
+export default SignUp;
