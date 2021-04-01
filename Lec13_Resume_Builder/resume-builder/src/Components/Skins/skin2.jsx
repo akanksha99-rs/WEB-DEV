@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./skin2.css";
+import "./skin1.css";
 class Skin1 extends Component {
   state = {
     contactDetails: {
@@ -127,7 +127,7 @@ class Skin1 extends Component {
     let achievements = this.state.achievements;
     let hobbies = this.state.hobbies;
     return (
-      <div className="resume-skin">
+      <div ref={this.props.refProp} className="resume-skin">
         <div className="skin-top">
           <div className="user-heading">
             <div className="user-name">
